@@ -4,4 +4,4 @@ En esta página podes ver los datos de casos confirmados y muertes a escala mund
 
 Para realizar esto, utilicé la librería [Chart.js](https://www.chartjs.org/) para hacer los gráficos y esta [API](https://covid19api.com/) para obtener los datos.
 
-![](https://github.com/lucasigna/GeoQuiz/blob/main/img/github_img.JPG)
+![](https://github.com/lucasigna/Datos-Covid-API/blob/main/img/github_img.JPG)
