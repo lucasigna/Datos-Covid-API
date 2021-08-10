@@ -1,0 +1,208 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #02020B;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  min-height: 100vh;
+}
+
+body main {
+  margin: auto 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+body main h1 {
+  font-family: "Fira Code", monospace;
+  color: #EFF6EE;
+  text-align: center;
+  margin: 10px 0;
+}
+
+body main .containerTop {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 800px;
+  border: 1px solid #EFF6EE;
+  border-radius: 10px;
+  padding: 20px 10px;
+  margin-bottom: 20px;
+  background-color: #eff6ee15;
+}
+
+body main .containerTop__divCasos {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 10px;
+}
+
+body main .containerTop__divCasos__cantidad {
+  font-family: "Fira Code", monospace;
+  font-weight: 400;
+  color: #EFF6EE;
+  text-align: center;
+  font-size: 30px;
+}
+
+body main .containerTop__divCasos__texto {
+  font-family: "Fira Code", monospace;
+  font-weight: 400;
+  color: #eff6ee8c;
+  text-align: center;
+  font-size: 20px;
+}
+
+body main .containerTop__divMuertes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 10px;
+}
+
+body main .containerTop__divMuertes__cantidad {
+  font-family: "Fira Code", monospace;
+  font-weight: 400;
+  color: #C20114;
+  text-align: center;
+  font-size: 30px;
+}
+
+body main .containerTop__divMuertes__texto {
+  font-family: "Fira Code", monospace;
+  font-weight: 400;
+  color: #c201148f;
+  text-align: center;
+  font-size: 20px;
+}
+
+body main .containerBottom {
+  border: 1px solid #EFF6EE;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background-color: #eff6ee15;
+}
+
+body main .containerBottom__selects {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 800px;
+}
+
+body main .containerBottom__selects__selectPais {
+  background-color: #eff6ee00;
+  border: none;
+  border-right: 1px solid #EFF6EE;
+  color: #EFF6EE;
+  font-family: "Fira Code", monospace;
+  height: 40px;
+  width: 200px;
+  text-align: center;
+  padding: 5px 10px;
+}
+
+body main .containerBottom__selects__selectTipoDeDato {
+  background-color: #eff6ee00;
+  border: none;
+  color: #EFF6EE;
+  font-family: "Fira Code", monospace;
+  height: 40px;
+  width: 400px;
+  text-align: center;
+  padding: 5px 10px;
+}
+
+body main .containerBottom__selects__selectTiempo {
+  background-color: #eff6ee00;
+  border: none;
+  border-left: 1px solid #EFF6EE;
+  color: #EFF6EE;
+  font-family: "Fira Code", monospace;
+  height: 40px;
+  width: 200px;
+  text-align: center;
+  padding: 5px 10px;
+}
+
+body main .containerBottom__selects .option {
+  background-color: #eff6ee8c;
+  color: #02020B;
+  border-radius: 5px;
+}
+
+body main .containerBottom__chart {
+  margin: 20px;
+}
+
+body main .containerBottom #divLoading {
+  height: 200px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+body main .containerBottom #divLoading #loading {
+  font-family: "Fira Code", monospace;
+  font-weight: 400;
+  color: #eff6ee8c;
+  font-size: 30px;
+  text-align: center;
+  vertical-align: middle;
+  margin: auto 0;
+}
+
+/* Para vista en celular */
+@media only screen and (max-width: 600px) {
+  body main .containerTop {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    width: 90vw;
+  }
+  body main .containerBottom__selects {
+    width: 90vw;
+  }
+  body main .containerBottom__selects__selectPais {
+    width: 30vw;
+  }
+  body main .containerBottom__selects__selectTipoDeDato {
+    width: 30vw;
+  }
+  body main .containerBottom__selects__selectTiempo {
+    width: 30vw;
+  }
+}
+/*# sourceMappingURL=estilo.css.map */

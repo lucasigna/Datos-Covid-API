@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--! Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos/estilo.css">
+    <title>Clima</title>
+</head>
+<body>
+    <main>
+        <h1>Datos mundiales</h1>
+        <div class="containerTop">
+            <div class="containerTop__divCasos">
+                <p id="casos" class="containerTop__divCasos__cantidad"></p>
+                <h2 class="containerTop__divCasos__texto">Casos confirmados</h2>
+            </div>
+            <div class="containerTop__divMuertes">
+                <p id="muertes" class="containerTop__divMuertes__cantidad"></p>
+                <h2 class="containerTop__divMuertes__texto">Muertes confirmadas</h2>
+            </div>
+        </div>
+        <div class="containerBottom">
+            <div class="containerBottom__selects">
+                <select class="containerBottom__selects__selectPais" id="selectPais"></select>
+                <select class="containerBottom__selects__selectTipoDeDato" id="selectTipoDeDato">
+                    <option class="option" value="casosConfirmados">Casos confirmados</option>
+                    <option class="option" value="casosDiarios">Casos diarios</option>
+                    <option class="option" value="muertesConfirmadas">Muertes confirmadas</option>
+                    <option class="option" value="muertesDiarias">Muertes diarias</option>
+                </select>
+                <select class="containerBottom__selects__selectTiempo" id="selectTiempo">
+                    <option class="option" value="all">Desde el primer día</option>
+                    <option class="option" value="3">Hace 3 meses</option>
+                    <option class="option" value="6">Hace 6 meses</option>
+                    <option class="option" value="9">Hace 9 meses</option>
+                    <option class="option" value="12">Hace 1 año</option>
+                </select>
+            </div>
+            <hr>
+            <canvas class="containerBottom__chart" id="myChart"></canvas>
+            <div id="divLoading">
+                <p id="loading">Cargando...</p>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js" integrity="sha512-asxKqQghC1oBShyhiBwA+YgotaSYKxGP1rcSYTDrB0U6DxwlJjU59B67U8+5/++uFjcuVM8Hh5cokLjZlhm3Vg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

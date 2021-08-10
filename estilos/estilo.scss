@@ -1,0 +1,176 @@
+@import 'variables';
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: $colorNegroFondo;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    main{
+        margin: auto 0;
+        display: flex;
+        flex-direction: column;
+        h1{
+            font-family: $fuente;
+            color: $colorBlanco;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .containerTop{
+            display: flex;
+            justify-content: space-around; 
+            width: 800px;
+            border: 1px solid $colorBlanco;
+            border-radius: 10px;
+            padding:  20px 10px;
+            margin-bottom: 20px;
+            background-color: $colorBlancoTransparenteFondo;
+            &__divCasos{
+                display: flex;
+                flex-direction: column;
+                padding: 10px;
+                &__cantidad{
+                    font-family: $fuente;
+                    font-weight: 400;
+                    color: $colorBlanco;
+                    text-align: center;
+                    font-size: 30px;
+                }
+                &__texto{
+                    font-family: $fuente;
+                    font-weight: 400;
+                    color: $colorBlancoTransparente;
+                    text-align: center;
+                    font-size: 20px;
+
+                }
+            }
+            &__divMuertes{
+                display: flex;
+                flex-direction: column;
+                padding: 10px;
+                &__cantidad{
+                    font-family: $fuente;
+                    font-weight: 400;
+                    color: $colorRojo;
+                    text-align: center;
+                    font-size: 30px;
+
+                }
+                &__texto{
+                    font-family: $fuente;
+                    font-weight: 400;
+                    color: $colorRojoTransparente;
+                    text-align: center;
+                    font-size: 20px;
+
+                }
+            }
+        }
+        .containerBottom{
+            border: 1px solid $colorBlanco;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background-color: $colorBlancoTransparenteFondo;
+            &__selects{
+                display: flex;
+                flex-direction: row;
+                width: 800px;
+                &__selectPais{
+                    background-color: $colorTransparente;
+                    border: none;
+                    border-right: 1px solid $colorBlanco;
+                    color: $colorBlanco;
+                    font-family: $fuente;
+                    height: 40px;
+                    width: 200px;
+                    text-align: center;
+                    padding: 5px 10px;
+
+                }
+                &__selectTipoDeDato{
+                    background-color: $colorTransparente;
+                    border: none;
+                    color: $colorBlanco;
+                    font-family: $fuente;
+                    height: 40px;
+                    width: 400px;
+                    text-align: center;
+                    padding: 5px 10px;
+                }
+                &__selectTiempo{
+                    background-color: $colorTransparente;
+                    border: none;
+                    border-left: 1px solid $colorBlanco;
+                    color: $colorBlanco;
+                    font-family: $fuente;
+                    height: 40px;
+                    width: 200px;
+                    text-align: center;
+                    padding: 5px 10px;
+
+                }
+                .option{
+                    background-color: $colorBlancoTransparente;
+                    color: $colorNegroFondo;
+                    border-radius: 5px;
+                }
+            }
+            &__chart{
+                margin: 20px;
+            }
+            #divLoading{
+                height: 200px;
+                display: flex;
+                justify-content: center;
+                #loading{
+                    font-family: $fuente;
+                    font-weight: 400;
+                    color: $colorBlancoTransparente;
+                    font-size: 30px;
+                    text-align: center;
+                    vertical-align: middle;
+                    margin: auto 0;
+                }
+            }
+        }
+
+    }
+}
+
+/* Para vista en celular */
+
+@media only screen and (max-width: 600px) {
+
+    body{
+        main{
+            .containerTop{
+                flex-direction: column;
+                width: 90vw;
+            }
+            .containerBottom{
+                &__selects{
+                    width: 90vw;
+                    &__selectPais{
+                        width: 30vw;
+
+                    }
+                    &__selectTipoDeDato{
+                        width: 30vw;
+
+                    }
+                    &__selectTiempo{
+                        width: 30vw;
+
+                    }
+                    
+                }
+            }
+        }
+    }
+
+}
