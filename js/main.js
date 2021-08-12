@@ -16,7 +16,6 @@ $(document).ready(function() {
     const ctx = $('#myChart');
     ctx.hide();// Escondo el gráfico hasta que cargue
     const divLoading = $('#divLoading');
-    const loading = $('#loading');
     const selectPais = $("#selectPais");
     const selectTipoDeDato = $("#selectTipoDeDato");
     const selectTiempo = $("#selectTiempo");
@@ -26,36 +25,20 @@ $(document).ready(function() {
     selectTipoDeDato.change( cambiarGrafico );
     selectTiempo.change( cambiarGrafico );
 
-    // Variable id del setInterval() para terminarlo cuando haya cargado el gráfico
-    let idIntervalLoading;
     // Agrego los datos de casos y muertes en el top
     actualizarCasosYMuertes();
     // Relleno las opciones de paises en el select
     rellenarSelectPaises();
     // Muestro un indicador de carga de datos
-    mostrarCargando();
+    divLoading.show();
+    divLoading.html('<p id="loading">Cargando...</p>');
 
     //! Funciones
-    
-    function mostrarCargando() {
-        
-        divLoading.show();
-        let puntos = '';
-            
-        idIntervalLoading = setInterval( function() {
 
-            loading.html(`Cargando${puntos}`);
-            puntos = puntos.concat('.');
-            if (puntos == '...') {
-                puntos = '';
-            }
-
-        }, 1000);
-
-    }
-
+    // Función que se ejecuta cada vez que se solicita otro gráfico
     function cambiarGrafico(event) {
         
+        // Destruyo el gráfico para actualizarlo
         myChart.destroy();
         // Obtengo el día de hoy y pongo en el 00:00:00:000
         let fechaDeHoy = new Date();
@@ -63,6 +46,7 @@ $(document).ready(function() {
         fechaDeHoy.setSeconds(0);
         fechaDeHoy.setMinutes(0);
         fechaDeHoy.setMilliseconds(0);
+        // Obtengo el valor de los select
         let pais = selectPais.val();
         let dato = selectTipoDeDato.val();
         let tiempo = selectTiempo.val();
@@ -72,25 +56,25 @@ $(document).ready(function() {
                 mostrarDatosDePais(pais,'','',selectTipoDeDato.val());
                 break;
             case '3':
+                // Cambio la fecha de inicio a los meses correspondientes
                 from.setMonth(fechaDeHoy.getMonth() - 3);
                 mostrarDatosDePais(pais,from.toISOString(),fechaDeHoy.toISOString(),selectTipoDeDato.val());
                 break;
             case '6':
+                // Cambio la fecha de inicio a los meses correspondientes
                 from.setMonth(fechaDeHoy.getMonth() - 6);
                 mostrarDatosDePais(pais,from.toISOString(),fechaDeHoy.toISOString(),selectTipoDeDato.val());
-                
                 break;
             case '9':
+                // Cambio la fecha de inicio a los meses correspondientes
                 from.setMonth(fechaDeHoy.getMonth() - 9);
                 mostrarDatosDePais(pais,from.toISOString(),fechaDeHoy.toISOString(),selectTipoDeDato.val());
-                
                 break;
             case '12':
+                // Cambio la fecha de inicio a los meses correspondientes
                 from.setMonth(fechaDeHoy.getMonth() - 12);
                 mostrarDatosDePais(pais,from.toISOString(),fechaDeHoy.toISOString(),selectTipoDeDato.val());
-                
                 break;
-            
             default:
                 break;
         }
@@ -103,6 +87,7 @@ $(document).ready(function() {
         .then(response => response.json())
         .then( function(json) {
 
+            // Ordeno los países alfabeticamente
             json.sort((a, b) => {
                 let fa = a['Country'].toLowerCase(),
                     fb = b['Country'].toLowerCase();
@@ -115,8 +100,7 @@ $(document).ready(function() {
                 }
                 return 0;
             });
-
-
+            // Imprimo en el select las opciones
             for (const country of json) {
 
                 selectPais.append(`
@@ -131,21 +115,22 @@ $(document).ready(function() {
 
     function mostrarDatosDePais(pais, from, to, tipoDeDato) {
         
-        mostrarCargando();
+        ctx.hide();
+        divLoading.show();
+        divLoading.html('<p id="loading">Cargando...</p>');
         switch (tipoDeDato) {
             case 'casosConfirmados':
-                mostrarCasosConfirmados(pais,from,to);//! Terminado
+                mostrarCasosConfirmados(pais,from,to);
                 break;
             case 'casosDiarios':
-                mostrarCasosDiarios(pais,from,to);//! Terminado
+                mostrarCasosDiarios(pais,from,to);
                 break;
             case 'muertesConfirmadas':
-                mostrarMuertesConfirmadas(pais,from,to);//? Casi Terminado
+                mostrarMuertesConfirmadas(pais,from,to);
                 break;
             case 'muertesDiarias':
                 mostrarMuertesDiarias(pais,from,to);
                 break;
-            
             default:
                 break;
         }
@@ -161,20 +146,26 @@ $(document).ready(function() {
             .then( function(json) {
                 let data = json.map((day) => { return day['Cases'] });
                 let time = json.map((day) => { return new Date(day['Date'])  });
-                let timeLabel = time.map( function(day) { 
+                let timeLabel = time.map( function(day) {
                     
                     let mes = day.getMonth();
                     let year = day.getFullYear();
+                    let dia = day.getDate();
                     if (year == 2020) {
                         year = 20;
                     }
                     if (year == 2021) {
                         year = 21;
                     }
-                    return `${meses[mes]} ${year}`;
+                    return `${dia} ${meses[mes]} ${year}`;
 
                 });
-                dibujarGráfico(data, timeLabel);
+                if (data.length == 0) {
+                    // No hay datos, aviso al usuario
+                    divLoading.html('<p id="loading">No hay datos</p>');
+                } else {
+                    dibujarGráfico(data, timeLabel);
+                }
             })
             .catch( err => console.log(err) );
 
@@ -189,16 +180,22 @@ $(document).ready(function() {
                     
                     let mes = day.getMonth();
                     let year = day.getFullYear();
+                    let dia = day.getDate();
                     if (year == 2020) {
                         year = 20;
                     }
                     if (year == 2021) {
                         year = 21;
                     }
-                    return `${meses[mes]} ${year}`;
+                    return `${dia} ${meses[mes]} ${year}`;
 
                 });
-                dibujarGráfico(data, timeLabel);
+                if (data.length == 0) {
+                    // No hay datos, aviso al usuario
+                    divLoading.html('<p id="loading">No hay datos</p>');
+                } else {
+                    dibujarGráfico(data, timeLabel);
+                }
             })
             .catch( err => console.log(err) );
 
@@ -233,16 +230,22 @@ $(document).ready(function() {
                     
                     let mes = day.getMonth();
                     let year = day.getFullYear();
+                    let dia = day.getDate();
                     if (year == 2020) {
                         year = 20;
                     }
                     if (year == 2021) {
                         year = 21;
                     }
-                    return `${meses[mes]} ${year}`;
+                    return `${dia} ${meses[mes]} ${year}`;
 
                 });
-                dibujarGráfico(data, timeLabel);
+                if (data.length == 0) {
+                    // No hay datos, aviso al usuario
+                    divLoading.html('<p id="loading">No hay datos</p>');
+                } else {
+                    dibujarGráfico(data, timeLabel);
+                }
             })
             .catch( err => console.log(err) );
 
@@ -271,16 +274,22 @@ $(document).ready(function() {
                     
                     let mes = day.getMonth();
                     let year = day.getFullYear();
+                    let dia = day.getDate();
                     if (year == 2020) {
                         year = 20;
                     }
                     if (year == 2021) {
                         year = 21;
                     }
-                    return `${meses[mes]} ${year}`;
+                    return `${dia} ${meses[mes]} ${year}`;
 
                 });
-                dibujarGráfico(data, timeLabel);
+                if (data.length == 0) {
+                    // No hay datos, aviso al usuario
+                    divLoading.html('<p id="loading">No hay datos</p>');
+                } else {
+                    dibujarGráfico(data, timeLabel);
+                }
             })
             .catch( err => console.log(err) );
 
@@ -321,16 +330,22 @@ $(document).ready(function() {
                     
                     let mes = day.getMonth();
                     let year = day.getFullYear();
+                    let dia = day.getDate();
                     if (year == 2020) {
                         year = 20;
                     }
                     if (year == 2021) {
                         year = 21;
                     }
-                    return `${meses[mes]} ${year}`;
+                    return `${dia} ${meses[mes]} ${year}`;
 
                 });
-                dibujarGráfico(data, timeLabel);
+                if (data.length == 0) {
+                    // No hay datos, aviso al usuario
+                    divLoading.html('<p id="loading">No hay datos</p>');
+                } else {
+                    dibujarGráfico(data, timeLabel);
+                }
             })
             .catch( err => console.log(err) );
 
@@ -345,16 +360,22 @@ $(document).ready(function() {
                     
                     let mes = day.getMonth();
                     let year = day.getFullYear();
+                    let dia = day.getDate();
                     if (year == 2020) {
                         year = 20;
                     }
                     if (year == 2021) {
                         year = 21;
                     }
-                    return `${meses[mes]} ${year}`;
+                    return `${dia} ${meses[mes]} ${year}`;
 
                 });
-                dibujarGráfico(data, timeLabel);
+                if (data.length == 0) {
+                    // No hay datos, aviso al usuario
+                    divLoading.html('<p id="loading">No hay datos</p>');
+                } else {
+                    dibujarGráfico(data, timeLabel);
+                }
             })
             .catch( err => console.log(err) );
 
@@ -405,16 +426,22 @@ $(document).ready(function() {
                     
                     let mes = day.getMonth();
                     let year = day.getFullYear();
+                    let dia = day.getDate();
                     if (year == 2020) {
                         year = 20;
                     }
                     if (year == 2021) {
                         year = 21;
                     }
-                    return `${meses[mes]} ${year}`;
+                    return `${dia} ${meses[mes]} ${year}`;
 
                 });
-                dibujarGráfico(data, timeLabel);
+                if (data.length == 0) {
+                    // No hay datos, aviso al usuario
+                    divLoading.html('<p id="loading">No hay datos</p>');
+                } else {
+                    dibujarGráfico(data, timeLabel);
+                }
             })
             .catch( err => console.log(err) );
 
@@ -443,16 +470,22 @@ $(document).ready(function() {
                     
                     let mes = day.getMonth();
                     let year = day.getFullYear();
+                    let dia = day.getDate();
                     if (year == 2020) {
                         year = 20;
                     }
                     if (year == 2021) {
                         year = 21;
                     }
-                    return `${meses[mes]} ${year}`;
+                    return `${dia} ${meses[mes]} ${year}`;
 
                 });
-                dibujarGráfico(data, timeLabel);
+                if (data.length == 0) {
+                    // No hay datos, aviso al usuario
+                    divLoading.html('<p id="loading">No hay datos</p>');
+                } else {
+                    dibujarGráfico(data, timeLabel);
+                }
             })
             .catch( err => console.log(err) );
 
@@ -462,8 +495,6 @@ $(document).ready(function() {
 
     function dibujarGráfico(data,time) {
 
-        //myChart.destroy();
-        clearInterval(idIntervalLoading);
         divLoading.fadeOut('slow');
         ctx.fadeIn('slow');
         myChart = new Chart(ctx, {
@@ -521,7 +552,7 @@ $(document).ready(function() {
                 muertesID.hide();
                 let casos = json['Global']['TotalConfirmed'];
                 let muertes = json['Global']['TotalDeaths'].toString();
-
+                // Agrego una animación de contador para que quede mejor
                 let casosInicio = casos-100;
                 let muertesInicio = muertes-100;
                 
@@ -530,31 +561,34 @@ $(document).ready(function() {
                 muertesID.fadeIn('slow');
                 muertesID.slideDown('slow');
 
-                setInterval( function() {
+                let intervalCasos;
+                intervalCasos = setInterval( function() {
 
                     if (casosInicio <= casos) {
                         casosID.html(agregarPuntos(casosInicio.toString()));
                         casosInicio++;   
+                    } else {
+                        clearInterval(intervalCasos);
                     }
 
                 }, 0.1);
 
-                setInterval( function() {
+                let intervalMuertes;
+                intervalMuertes = setInterval( function() {
 
                     if (muertesInicio <= muertes) {
                         muertesID.html(agregarPuntos(muertesInicio.toString()));
                         muertesInicio++;   
+                    } else {
+                        clearInterval(intervalMuertes);
                     }
 
                 }, 0.1);
 
-                //casosID.html(agregarPuntos(casos));
-                //muertesID.html(agregarPuntos(muertes));
-
             });
 
     }
-
+    // Función que agrega puntos a los números para mejorar la visibilidad del usuario
     function agregarPuntos(num) {
         return (
             num // always two decimal digits
